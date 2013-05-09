@@ -6,7 +6,7 @@
 
 #define MY_PORT 666 // port listen server
 
-#define PRINTNUSERS if (nclients) printf("%d users on-linr\n", nclients); else puts("No user on-line...\n"); // my first macros in my life =)
+#define PRINTNUSERS if (nclients) printf("%d users on-line\n", nclients); else puts("No user on-line...\n"); // my first macros in my life =)
 //mb puts(..) not best func for it
 
 DWORD WINAPI ProcessingClient(LPVOID client_socket);
@@ -71,7 +71,11 @@ int main(int argc, char* argv[])
 		nclients++; // +1 to clients
 
 		HOSTENT *hst; // try take host name
-		(hst) ? hst -> h_name : "", inet_ntoa(client_addr.sin_addr);
+		hst = gethostbyaddr((char *) &client_addr.sin_addr.s_addr, 4, AF_INET);
+
+		printf("+%s [%s] new connect!\n",
+			(hst) ? hst -> h_name : "",
+			inet_ntoa(client_addr.sin_addr));
 		PRINTNUSERS;
 
 		DWORD thID;
