@@ -1,4 +1,4 @@
-﻿Build started 5/9/2013 6:56:48 PM.
+﻿Build started 6/30/2013 9:52:03 PM.
      1>Project "c:\Users\andorus911\Documents\GitHub\messenger-main-repo\server_pm_v01\server_pm_v01\server_pm_v01.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\server_pm_v01.unsuccessfulbuild" because "AlwaysCreate" was specified.
@@ -23,4 +23,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:03.41
+Time Elapsed 00:00:04.01

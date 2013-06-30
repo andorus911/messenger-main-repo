@@ -1,15 +1,42 @@
-#pragma comment (lib, "ws2_32.lib")
+#ifdef _WIN32
+	#pragma comment (lib, "ws2_32.lib")
+	#include <WinSock2.h>
+	#include <Windows.h>
+	#define START(x,y) if(WSAStartup(x, (WSADATA *) y)) { PERROR("Error WSAStartup %d\n"); }	
+	//#define START if(WSAStartup(0x0202, (WSADATA *) &buff[0])) { PERROR("Error WSAStartup %d\n"); }
+	//#define CLEAN WSACleanup()
+	//#define LASTERR WSAGetLastError()
+	#define PERROR(x) printf(x,WSAGetLastError()); WSACleanup(); return -1
+	#define CLOSE(x) closesocket(x)
+	#define THREADCREATE(x,y,z) CreateThread(NULL, NULL, x, y, NULL, z)
+	typedef SOCKET CRSOCK; 
+#else 
+	#include <sys/types.h>
+	#include <sys/socket.h>
+	#include <netinet/in.h>
+	#include <arpa/inet.h>
+	#include <unistd.h>
+	#define START
+	#define SOCKET_ERROR (-1)
+	#define THREADCREATE(x,y,z) pthread_create(z, NULL, x, y)
+	#define PERROR(x) printf(x); CLEAN; return -1
+	#define CLOSE(x) close(x)
+	typedef int CRSOCK;
+	typedef unsigned long DWORD WINAPI;
+#endif
 
+#include <stdlib.h>
 #include <stdio.h>
-#include <WinSock2.h> // pered windows.h, recomended
-#include <Windows.h>
+#include <string.h>
+
 
 #define MY_PORT 666 // port listen server
 
-#define PRINTNUSERS if (nclients) printf("%d users on-line\n", nclients); else puts("No user on-line...\n"); // my first macros in my life =)
+#define PRINTNUSERS if (nclients) printf("%d users on-line\n", nclients); else puts("No user on-line...\n");
 //mb puts(..) not best func for it
 
-DWORD WINAPI ProcessingClient(LPVOID client_socket);
+
+DWORD __stdcall ProcessingClient(LPVOID client_socket);
 //function for clients
 
 int nclients = 0;
@@ -21,19 +48,13 @@ int main(int argc, char* argv[])
 
 	puts("TCP SERVER RUNING\n");
 	
-	if (WSAStartup(0x0202, (WSADATA *) &buff[0]))
-	{
-		printf("Error WSAStartup %d\n", WSAGetLastError());
-		WSACleanup(); // close winsock
-		return -1;
-	}
+	START(0x0202, &buff[0]);
 
-	SOCKET mysocket; //AF_INET - sock for net, SOCK_STREAM - stream, 0 - TCP(default)
+	CRSOCK mysocket; //AF_INET - sock for net, SOCK_STREAM - stream, 0 - TCP(default)
+
 	if ((mysocket = socket(AF_INET, SOCK_STREAM, 0)) < 0) // if inicializing
 	{
-		printf("Error socket %d\n", WSAGetLastError());
-		WSACleanup(); // close winsock
-		return -1;
+		PERROR("Error socket %d\n");
 	}
 
 	sockaddr_in local_addr;
@@ -45,24 +66,20 @@ int main(int argc, char* argv[])
 	// связка
 	if (bind(mysocket, (sockaddr *) &local_addr, sizeof(local_addr)))
 	{
-		printf("Error bind %d\n", WSAGetLastError());
-		closesocket(mysocket); // !!!
-		WSACleanup();
-		return -1;
+		CLOSE(mysocket);
+		PERROR("Error bind %d\n");
 	}
 
 	// size of queue - 0x100.. why?
 	if(listen(mysocket, 0x100))
 	{
-		printf("Error bind %d\n", WSAGetLastError());
-		closesocket(mysocket);
-		WSACleanup();
-		return -1;
+		CLOSE(mysocket);
+		PERROR("Error bind %d\n");
 	}
 
 	puts("Waiting for clients...\n");
 
-	SOCKET client_socket;
+	CRSOCK client_socket;
 	sockaddr_in client_addr; // client's addr, syst will write in it
 	int client_addr_size = sizeof(client_addr); // for accept(..)
 
@@ -74,23 +91,26 @@ int main(int argc, char* argv[])
 		hst = gethostbyaddr((char *) &client_addr.sin_addr.s_addr, 4, AF_INET);
 
 		printf("+%s [%s] new connect!\n",
-			(hst) ? hst -> h_name : "",
+			(hst) ? hst->h_name : "",
 			inet_ntoa(client_addr.sin_addr));
 		PRINTNUSERS;
 
 		DWORD thID;
-		CreateThread(NULL, NULL, ProcessingClient, &client_socket, NULL, &thID);
+		THREADCREATE(ProcessingClient, &client_socket, &thID);
+		//CreateThread(NULL, NULL, ProcessingClient, &client_socket, NULL, &thID);
+		//pthread_create(&thID, NULL, ProcessingClient, &client_socket);
 	}
 	//shutdown(sock, SD_BOTH); // немного более сложное закрытие соединения
 	return 0;
 }
 
-DWORD WINAPI ProcessingClient(LPVOID client_socket)
+DWORD __stdcall ProcessingClient(LPVOID client_socket)
 {
-	SOCKET my_sock;
+	CRSOCK my_sock;
 	my_sock = ((SOCKET *) client_socket)[0];
 	char buff[20 * 1024];
 	int bytes_recv;
+
 #define sHELLO "Hello, sir!\n"
 
 	send(my_sock, sHELLO, sizeof(sHELLO), 0); // send hello
@@ -104,6 +124,6 @@ DWORD WINAPI ProcessingClient(LPVOID client_socket)
 	puts("-disconnect\n");
 	PRINTNUSERS;
 
-	closesocket(my_sock);
+	CLOSE(my_sock);
 	return 0;
 }

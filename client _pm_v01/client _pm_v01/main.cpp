@@ -1,9 +1,33 @@
-#pragma comment (lib, "ws2_32.lib")
+#ifdef _WIN32
+	#pragma comment (lib, "ws2_32.lib")
+	#include <WinSock2.h>
+	#include <Windows.h>
+	#define START(x,y) if(WSAStartup(x, (WSADATA *) y)) { PERROR("Error WSAStartup %d\n"); }
+	#define CLEAN WSACleanup()
+	#define LERROR WSAGetLastError()
+	#define PERROR(x) printf(x,WSAGetLastError()); WSACleanup(); return -1
+	#define CLOSE(x) closesocket(x)
+	typedef SOCKET CRSOCK; //переопределение для этого типа не работает
+#else 
+	#include <sys/types.h>
+	#include <sys/socket.h>
+	#include <netinet/in.h>
+	#include <arpa/inet.h>
+	#include <unistd.h>
+	#define START
+	#define CLEAN
+	#define SOCKET_ERROR (-1)
+	#define PERROR(x) printf(x); CLEAN; return -1
+	#define CLOSE(x) close(x)
+	typedef int CRSOCK;
+	typedef unsigned long DWORD WINAPI;
+#endif
 
+
+#include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <WinSock2.h>
-#include <Windows.h>
+
 
 #define PORT 666
 #define SERVERADDR "127.0.0.1"
@@ -13,17 +37,12 @@ int main(int argc, char* argv[])
 	char buff[1024]; // buffer
 	puts("TCP CLIENT");
 
-	if(WSAStartup(0x202, (WSADATA *) &buff[0]))
-	{
-		printf("WSAStart error %d\n", WSAGetLastError());
-		return -1;
-	}
+	START(0x202, &buff[0]);
 
-	SOCKET my_sock = socket(AF_INET, SOCK_STREAM, 0);
+	CRSOCK my_sock = socket(AF_INET, SOCK_STREAM, 0);
 	if(my_sock < 0)
 	{
-		printf("Socket() error %d\n", WSAGetLastError());
-		return -1;
+		PERROR("Socket() error %d\n");
 	}
 
 	// addr & port in sockaddr_in
@@ -42,15 +61,15 @@ int main(int argc, char* argv[])
 			((unsigned long *) &dest_addr.sin_addr)[0] = ((unsigned long **) hst->h_addr_list)[0][0];
 		else
 		{
-			printf("Invalid address %s\n", SERVERADDR);
-			closesocket(my_sock);
-			WSACleanup();
+			CLOSE(my_sock);
+			PERROR("Invalid address %s\n", SERVERADDR);
+			CLEAN;
 			return -1;
 		}
 		//get addr serv - connect to serv
 		if (connect(my_sock, (sockaddr *) &dest_addr, sizeof(dest_addr)))
 		{
-			printf("Connect error %d\n", WSAGetLastError());
+			printf("Connect error %d\n", LERROR);
 			return -1;
 		}
 
@@ -70,8 +89,8 @@ int main(int argc, char* argv[])
 			{
 				//exit
 				puts("Exit...");
-				closesocket(my_sock);
-				WSACleanup();
+				CLOSE(my_sock);
+				CLEAN;
 				return 0;
 			}
 
@@ -80,8 +99,8 @@ int main(int argc, char* argv[])
 		}
 
 		printf("Recv error %d\n", WSAGetLastError());
-		closesocket(my_sock);
+		CLOSE(my_sock);
 		//shutdown(sock, SD_BOTH); // немного более сложное закрытие соединения
-		WSACleanup();
+		CLEAN;
 		return -1;
 }
