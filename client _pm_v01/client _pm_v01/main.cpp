@@ -32,6 +32,18 @@
 #define PORT 666
 #define SERVERADDR "127.0.0.1"
 
+
+class CSocket
+{
+public:
+#ifdef _WIN32
+	SOCKET sokh;
+#else 
+	int sokh;
+#endif
+
+};
+
 int main(int argc, char* argv[])
 {
 	char buff[1024]; // buffer
@@ -39,8 +51,9 @@ int main(int argc, char* argv[])
 
 	START(0x202, &buff[0]);
 
-	CRSOCK my_sock = socket(AF_INET, SOCK_STREAM, 0);
-	if(my_sock < 0)
+	CSocket my_sock;
+	my_sock.sokh = socket(AF_INET, SOCK_STREAM, 0);
+	if(my_sock.sokh < 0)
 	{
 		PERROR("Socket() error %d\n");
 	}
@@ -61,13 +74,13 @@ int main(int argc, char* argv[])
 			((unsigned long *) &dest_addr.sin_addr)[0] = ((unsigned long **) hst->h_addr_list)[0][0];
 		else
 		{
-			CLOSE(my_sock);
+			CLOSE(my_sock.sokh);
 			PERROR("Invalid address %s\n", SERVERADDR);
 			CLEAN;
 			return -1;
 		}
 		//get addr serv - connect to serv
-		if (connect(my_sock, (sockaddr *) &dest_addr, sizeof(dest_addr)))
+		if (connect(my_sock.sokh, (sockaddr *) &dest_addr, sizeof(dest_addr)))
 		{
 			printf("Connect error %d\n", LERROR);
 			return -1;
@@ -76,30 +89,31 @@ int main(int argc, char* argv[])
 		printf("Connection to %s: succesfull\nType \"quit\" for quit\n\n", SERVERADDR);
 
 		int nsize;
-		while((nsize = recv(my_sock, &buff[0], sizeof(buff) - 1, 0)) != SOCKET_ERROR)
+		while((nsize = recv(my_sock.sokh, &buff[0], sizeof(buff) - 1, 0)) != SOCKET_ERROR)
 		{
 			// null in end of string
 			buff[nsize] = 0;
 
 			printf("S=>C:%s", buff);
 
-			printf("S<=C:"); fgets(&buff[0], sizeof(buff)-1, stdin);//read string
-
+			printf("S<=C:");
+			fgets(&buff[0], sizeof(buff)-1, stdin);//read string
+			//ÍÀÄÎ ÏÐÎÑÒÎ ÄÎÁÀÂÈÒÜ ÑÞÄÀ ÏÎËÓ×ÅÍÈÅ ÏÀÊÅÒÀ È ÂÑÅ ÍÎ ÊÀÊ ÝÒÎ ÑÄÅËÀÒÜ
 			if (!strcmp(&buff[0], "quit\n"))
 			{
 				//exit
 				puts("Exit...");
-				CLOSE(my_sock);
+				CLOSE(my_sock.sokh);
 				CLEAN;
 				return 0;
 			}
 
 			//send string to serv
-			send(my_sock, &buff[0], nsize, 0);
+			send(my_sock.sokh, &buff[0], nsize, 0);
 		}
 
 		printf("Recv error %d\n", WSAGetLastError());
-		CLOSE(my_sock);
+		CLOSE(my_sock.sokh);
 		//shutdown(sock, SD_BOTH); // íåìíîãî áîëåå ñëîæíîå çàêðûòèå ñîåäèíåíèÿ
 		CLEAN;
 		return -1;
