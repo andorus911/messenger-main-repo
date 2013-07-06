@@ -1,5 +1,5 @@
-﻿Build started 7/4/2013 1:27:07 PM.
-     1>Project "C:\Users\andorus911\Documents\GitHub\messenger-main-repo\server_pm_v01\server_pm_v01\server_pm_v01.vcxproj" on node 2 (build target(s)).
+﻿Build started 7/6/2013 10:04:02 PM.
+     1>Project "c:\Users\andorus911\Documents\GitHub\messenger-main-repo\server_pm_v01\server_pm_v01\server_pm_v01.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\server_pm_v01.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
@@ -19,8 +19,8 @@
        FinalizeBuildStatus:
          Deleting file "Debug\server_pm_v01.unsuccessfulbuild".
          Touching "Debug\server_pm_v01.lastbuildstate".
-     1>Done Building Project "C:\Users\andorus911\Documents\GitHub\messenger-main-repo\server_pm_v01\server_pm_v01\server_pm_v01.vcxproj" (build target(s)).
+     1>Done Building Project "c:\Users\andorus911\Documents\GitHub\messenger-main-repo\server_pm_v01\server_pm_v01\server_pm_v01.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:03.73
+Time Elapsed 00:00:03.32

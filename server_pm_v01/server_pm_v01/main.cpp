@@ -29,6 +29,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <typeinfo.h>
 
 
 #define MY_PORT 666 // port listen server
@@ -36,24 +37,10 @@
 #define PRINTNUSERS if (nclients) printf("%d users on-line\n", nclients); else puts("No user on-line...\n");
 //mb puts(..) not best func for it
 
-class CThread
-{
-public:
-	DWORD ID;
-	int * socket;
-
-	void crThread(/*DWORD __stdcall **/LPTHREAD_START_ROUTINE res, CRSOCK * sock, DWORD * ID) {
-		#ifdef _WIN32
-			CreateThread(NULL, NULL, res, sock, NULL, ID);
-		#else
-			pthread_create(ID, NULL, res, sock);
-		#endif
-	}
-};
-
 class CSocket
 {
 public:
+//protected:
 #ifdef _WIN32
 	SOCKET sokh;
 #else 
@@ -62,7 +49,26 @@ public:
 
 };
 
-DWORD __stdcall ProcessingClient(LPVOID client_socket);
+class CThread : CSocket
+{
+
+	DWORD ID;
+public:
+	//CThread();
+	//CThread(int af, int stream, int prot) {
+	//	sokh = socket(af, stream, prot);
+	//}
+
+	void crThread(/*DWORD __stdcall **/LPTHREAD_START_ROUTINE res, void * sock, DWORD * ID) {
+		#ifdef _WIN32
+			CreateThread(NULL, NULL, res, sock, NULL, ID);
+		#else
+			pthread_create(ID, NULL, res, sock);
+		#endif
+	}
+};
+
+DWORD __stdcall ProcessingClient(void * client_socket);
 //function for clients
 
 int nclients = 0;
@@ -136,10 +142,10 @@ int main(int argc, char* argv[])
 	return 0;
 }
 
-DWORD __stdcall ProcessingClient(LPVOID client_socket)//”«Ќј“№ что такое __stdcall
+DWORD __stdcall ProcessingClient(void * client_socket)//”«Ќј“№ что такое __stdcall
 {
 	CSocket my_sock;
-	my_sock.sokh = ((SOCKET *) client_socket)[0];
+	my_sock.sokh = ((int *) client_socket)[0];
 	char buff[20 * 1024];
 	int bytes_recv;
 
@@ -152,10 +158,12 @@ DWORD __stdcall ProcessingClient(LPVOID client_socket)//”«Ќј“№ что такое __stdca
 
 	//echo circle
 
-	while((bytes_recv = recv(my_sock.sokh, &buff[0], sizeof(buff), 0)) && bytes_recv != SOCKET_ERROR)
-		//send(my_sock, &buff[0], bytes_recv, 0);
+	while((bytes_recv = recv(my_sock.sokh, &buff[0], sizeof(buff), 0)) && bytes_recv != SOCKET_ERROR) {
+		
 		for(int i = 0; i < clientInd; i++)
-			send(clients[i].sokh, &buff[0], bytes_recv, 0);
+			if(clients[i].sokh != my_sock.sokh)
+				send(clients[i].sokh, &buff[0], bytes_recv, 0);
+	}
 
 	nclients--;
 	puts("-disconnect\n");
