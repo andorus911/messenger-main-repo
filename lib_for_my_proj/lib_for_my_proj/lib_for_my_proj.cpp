@@ -59,6 +59,14 @@ namespace lfmp
 		}
 	}
 
+	void CSocket::connect_h(void)
+	{
+		if (connect(sokh, (sockaddr *) &addrh, sizeof(addrh)))
+		{
+			printerr("Connect error");
+		}
+	}
+
 	void CSocket::listen_h(int q)
 	{
 		if(listen(sokh, q))
@@ -78,8 +86,8 @@ namespace lfmp
 
 	int CSocket::send_h(char * buff, int len, int flags)
 	{
-		send(sokh, &buff[0], len, flags);
-		return 0;
+		int i = send(sokh, &buff[0], len, flags);
+		return i;
 	}
 
 	int CSocket::recv_h(char * buff, int len, int flags)
@@ -110,6 +118,28 @@ namespace lfmp
 	char * CSocket::gethostaddr(void)
 	{
 		return inet_ntoa(addrh.sin_addr);
+	}
+
+	int CSocket::dest_addr(char * server_addr)
+	{
+		if (inet_addr(server_addr) != INADDR_NONE)
+		{
+			addrh.sin_addr.s_addr = inet_addr(server_addr);
+		}
+		else
+		{
+			if (hst = gethostbyname(server_addr))
+			{
+				((unsigned long *) &addrh.sin_addr)[0] = ((unsigned long **) hst->h_addr_list)[0][0];
+			}
+			else
+			{
+				closesokh();
+				printerr(strcat("Invalid address ", server_addr));
+				return -1;
+			}
+		}
+		return 0;
 	}
 
 	int CSocket::sizeofaddrh()

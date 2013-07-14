@@ -25,6 +25,7 @@ namespace lfmp
 		LFMPDLL_API SOCKET getSock(void);
 		LFMPDLL_API void socket_h(void);
 		LFMPDLL_API void bind_h(void);
+		LFMPDLL_API void connect_h(void);
 		LFMPDLL_API void listen_h(int backlog);
 		LFMPDLL_API int accept_h(CSocket asock, int * size);
 		LFMPDLL_API int send_h(char * buff, int len, int flags);
@@ -33,6 +34,7 @@ namespace lfmp
 		LFMPDLL_API void gethostbyaddrh(void);
 		LFMPDLL_API char * gethostname(void);
 		LFMPDLL_API char * gethostaddr(void);
+		LFMPDLL_API int dest_addr(char * server_addr);
 		LFMPDLL_API int sizeofaddrh();
 		LFMPDLL_API int printerr(char * message);
 	};

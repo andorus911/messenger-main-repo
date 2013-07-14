@@ -25,11 +25,15 @@ FUNC_THREAD PMWorking(void * client_socket);
 class CClient {
 	lfmp::CSocket sock;
 	char * client;
-	//сделать конструктор для выделения памяти
 public:
 	CClient()
 	{
 		client = new char[35];
+	}
+	~CClient()
+	{
+		delete[] client;
+		delete client;
 	}
 	void giveCAbysock(lfmp::CSocket given_sock) {
 		sock = given_sock;
@@ -67,13 +71,12 @@ public:
 
 int nclients = 0;
 int cliID = 0;
-CClient * cli = new CClient[0x100];
+CClient * cli = new CClient[256];
 	
 int main(int argc, char* argv[])
 {
 	char buff[1024];
-	lfmp::CSocket mysocket(0x0202, &buff[0], AF_INET, SOCK_STREAM, 0, MY_PORT, 0);
-	//mysocket.start_h();//ИЗМЕНИТЬ КОНСТРУКТОР
+	lfmp::CSocket mysocket(514, &buff[0], AF_INET, SOCK_STREAM, 0, MY_PORT, 0);
 
 	puts("TCP SERVER RUNING\n");
 	
@@ -81,7 +84,7 @@ int main(int argc, char* argv[])
 
 	mysocket.bind_h();
 
-	mysocket.listen_h(0x100);
+	mysocket.listen_h(256);
 
 	puts("Waiting for clients...\n");
 
@@ -101,27 +104,25 @@ int main(int argc, char* argv[])
 			client_socket.gethostname(),
 			client_socket.gethostaddr());
 		PRINTNUSERS;
-		cth.crThread(&(client_socket), PMWorking);//можно создать структуру содержащую эту функцию
+		cth.crThread(&(client_socket), PMWorking);
 	}
 	return 0;
 }
 
-FUNC_THREAD PMWorking(void * client_socket)//чтото делать с типом
+FUNC_THREAD PMWorking(void * client_socket)//можно создать структуру содержащую эту функцию
 {
-	//засунуть в класс, можно наследовать клиентский и серверный тред
 	lfmp::CSocket my_sock(client_socket);
-	//надо приписать функцию что будет работать с классом по ссылке, по сути еще один конструктор
 
 	char * buff = new char[1024];
 	char * cbuff = new char[1024];
-	int k, j = sizeof(buff) * 1024;
-	int bytes_recv;
+	int k, j;
+	int bytes_recv = strlen(buff);
 
 #define sHELLO "Wake up, Neo...\n"
 	
 	my_sock.send_h(sHELLO, sizeof(sHELLO), 0);
 
-	while((bytes_recv = my_sock.recv_h(buff, 1024, 0)) && bytes_recv != SOCKET_ERROR)
+	while((bytes_recv = my_sock.recv_h(buff, strlen(buff), 0)) && bytes_recv != SOCKET_ERROR)
 	{
 		for(k = 0; cli[k].getSock() != my_sock.getSock(); k++);
 		strcpy(cbuff, cli[k].getCAbysock());

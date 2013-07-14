@@ -1,15 +1,15 @@
 #ifdef _WIN32
-//	#pragma comment (lib, "ws2_32.lib")
 	#pragma comment (lib, "lib_for_my_proj.lib")
-//	#include <WinSock2.h>
 	#include "lib_for_my_proj.h"
 	#include <Windows.h>
+	#define FUNC_THREAD unsigned long __stdcall
 #else 
 	#include <sys/types.h>
 	#include <sys/socket.h>
 	#include <netinet/in.h>
 	#include <arpa/inet.h>
 	#include <unistd.h>
+	#define FUNC_THREAD unsigned long
 #endif
 
 #include <stdlib.h>
@@ -19,105 +19,59 @@
 #define PORT 666
 #define SERVERADDR "127.0.0.1"
 
-unsigned long __stdcall PrintMessages(void * server_socket);
+unsigned long __stdcall PMWorking(void * server_socket);
 
 int main(int argc, char* argv[])
 {
-	char buff[1024];
+	char * buff = new char[1024];
 	puts("TCP CLIENT");
-	lfmp::CSocket my_sock;
-
-	my_sock.start(0x202, &buff[0]);//конструктор должен делать эту работу, прин€ть на себу эту фигню
+	lfmp::CSocket my_sock(0x202, &buff[0], AF_INET, SOCK_STREAM, 0, PORT, 0);
 	
-	my_sock.sokh = socket(AF_INET, SOCK_STREAM, 0);//все функции по работе с сокетом запихать в длл ибо пол€ метода надо — –џ“№
-	if(my_sock.sokh < 0)//как и тут и далее заприватить сокх
+	my_sock.socket_h();
+
+	my_sock.dest_addr(SERVERADDR);
+
+	my_sock.connect_h();
+
+	printf("Connection to %s: succesfull\nType \"quit\" for quit\n\n", SERVERADDR);
+
+	lfmp::CThread thr;
+	thr.crThread(&my_sock, PMWorking);
+
+	while(true)
 	{
-		my_sock.printerr("Socket() error");
+		fgets(&buff[0], 1024, stdin);
+
+		if (!strcmp(&buff[0], "quit\n"))
+		{
+			//exit
+			puts("Exit...");
+			my_sock.closesokh();
+			my_sock.printerr("");
+			return 0;
+		}
+
+		my_sock.send_h(&buff[0], strlen(buff), 0);
 	}
 
-	sockaddr_in dest_addr;//отправить в длл как и функции
-	dest_addr.sin_family = AF_INET;
-	dest_addr.sin_port = htons(PORT);
-	HOSTENT *hst;
-
-	if (inet_addr(SERVERADDR) != INADDR_NONE)
-		dest_addr.sin_addr.s_addr = inet_addr(SERVERADDR);
-	else
-		// trying get ip addr (wiz domen)
-		if (hst = gethostbyname(SERVERADDR))
-			// hst->h_addr_list - arr * on addr
-			((unsigned long *) &dest_addr.sin_addr)[0] = ((unsigned long **) hst->h_addr_list)[0][0];
-		else
-		{
-			my_sock.close();
-			my_sock.printerr(strcat("Invalid address ", SERVERADDR));
-			return -1;
-		}
-
-		//get addr serv - connect to serv
-		if (connect(my_sock.sokh, (sockaddr *) &dest_addr, sizeof(dest_addr)))//тоже в длл
-		{
-			printf("Connect error\n");
-			return -1;
-		}
-
-		printf("Connection to %s: succesfull\nType \"quit\" for quit\n\n", SERVERADDR);
-
-
-		lfmp::CThread thr;
-		thr.crThread(&my_sock.sokh, PrintMessages);
-		int nsize;
-		while(/*(nsize = recv(my_sock.sokh, &buff[0], sizeof(buff) - 1, 0)) != SOCKET_ERROR*/true) {
-			// null in end of string
-			//buff[nsize] = 0;
-
-			//printf("S=>C:%s", buff);
-
-			//printf("I say: ", (hst) ? hst->h_name : inet_ntoa(dest_addr.sin_addr));
-			fgets(&buff[0], sizeof(buff)-1, stdin);//read string
-
-			if (!strcmp(&buff[0], "quit\n")) {
-				//exit
-				puts("Exit...");
-				my_sock.close();
-				//WSACleanup();
-				my_sock.printerr("");
-				return 0;
-			}
-
-			//send string to serv
-			send(my_sock.sokh, &buff[0], strlen(buff)/*nsize*/, 0);//в длл
-		}
-
-		my_sock.close();
-		my_sock.printerr("Recv error");
-		return -1;
+	my_sock.closesokh();
+	my_sock.printerr("Recv error");
+	return -1;
 }
 
 
-unsigned long __stdcall PrintMessages(void * server_socket) {
-	lfmp::CSocket my_sock;
-	my_sock.sokh = ((int *) server_socket)[0];
-	char buff[20 * 1024];//динамика
-	int bytes_recv;
+unsigned long __stdcall PMWorking(void * server_socket) {
+	lfmp::CSocket my_sock(server_socket);
+	char * buff = new char[1024];
+	int bytes_recv = strlen(buff);
 
-	//sockaddr_in dest_addr;
-	//dest_addr.sin_family = AF_INET;
-	//dest_addr.sin_port = htons(PORT);
-	//HOSTENT *hst; // try take host name
-	//hst = gethostbyaddr((char *) &dest_addr.sin_addr.s_addr, 4, AF_INET);
-
-	while((bytes_recv = recv(my_sock.sokh, &buff[0], sizeof(buff), 0)) && bytes_recv != SOCKET_ERROR)//ресив в длл
+	while((bytes_recv = my_sock.recv_h(&buff[0], 1024, 0)) && bytes_recv != SOCKET_ERROR)
 	{
 		buff[bytes_recv] = 0;
-		//printf("%s", /*(hst) ? hst->h_name : inet_ntoa(dest_addr.sin_addr),*/ buff);
 		puts(buff);
 	}
 
-
 	//прочитать про синхронизацию потока!!!!!!!!!!!!!!!!!!!!111111111111111111
 
-
-	//CLOSE(my_sock.sokh);
 	return 0;
 }
