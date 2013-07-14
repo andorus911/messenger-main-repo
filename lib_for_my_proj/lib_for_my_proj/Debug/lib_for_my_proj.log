@@ -1,4 +1,4 @@
-﻿Build started 7/12/2013 3:05:23 PM.
+﻿Build started 7/14/2013 1:55:39 AM.
      1>Project "c:\Users\andorus911\Documents\GitHub\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.vcxproj" on node 2 (rebuild target(s)).
      1>_PrepareForClean:
          Deleting file "Debug\lib_for_my_proj.lastbuildstate".
@@ -7,42 +7,6 @@
        ClCompile:
          C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D LIB_FOR_MY_PROJ_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt lib_for_my_proj.cpp
          lib_for_my_proj.cpp
-     1>c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.cpp(6): warning C4273: 'lfmp::CSocket::CSocket' : inconsistent dll linkage
-                 c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.h(22) : see previous definition of '{ctor}'
-     1>c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.cpp(10): warning C4273: 'lfmp::CSocket::CSocket' : inconsistent dll linkage
-                 c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.h(23) : see previous definition of '{ctor}'
-     1>c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.cpp(20): warning C4273: 'lfmp::CSocket::start_h' : inconsistent dll linkage
-                 c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.h(24) : see previous definition of 'start_h'
-     1>c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.cpp(28): warning C4273: 'lfmp::CSocket::getSock' : inconsistent dll linkage
-                 c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.h(25) : see previous definition of 'getSock'
-     1>c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.cpp(33): warning C4273: 'lfmp::CSocket::socket_h' : inconsistent dll linkage
-                 c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.h(26) : see previous definition of 'socket_h'
-     1>c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.cpp(46): warning C4273: 'lfmp::CSocket::bind_h' : inconsistent dll linkage
-                 c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.h(27) : see previous definition of 'bind_h'
-     1>c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.cpp(55): warning C4273: 'lfmp::CSocket::listen_h' : inconsistent dll linkage
-                 c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.h(28) : see previous definition of 'listen_h'
-     1>c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.cpp(64): warning C4273: 'lfmp::CSocket::accept_h' : inconsistent dll linkage
-                 c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.h(29) : see previous definition of 'accept_h'
-     1>c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.cpp(69): warning C4273: 'lfmp::CSocket::send_h' : inconsistent dll linkage
-                 c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.h(30) : see previous definition of 'send_h'
-     1>c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.cpp(75): warning C4273: 'lfmp::CSocket::recv_h' : inconsistent dll linkage
-                 c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.h(31) : see previous definition of 'recv_h'
-     1>c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.cpp(80): warning C4273: 'lfmp::CSocket::closesokh' : inconsistent dll linkage
-                 c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.h(32) : see previous definition of 'closesokh'
-     1>c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.cpp(89): warning C4273: 'lfmp::CSocket::gethostbyaddrh' : inconsistent dll linkage
-                 c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.h(33) : see previous definition of 'gethostbyaddrh'
-     1>c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.cpp(94): warning C4273: 'lfmp::CSocket::gethostname' : inconsistent dll linkage
-                 c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.h(34) : see previous definition of 'gethostname'
-     1>c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.cpp(99): warning C4273: 'lfmp::CSocket::gethostaddr' : inconsistent dll linkage
-                 c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.h(35) : see previous definition of 'gethostaddr'
-     1>c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.cpp(104): warning C4273: 'lfmp::CSocket::sizeofaddrh' : inconsistent dll linkage
-                 c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.h(36) : see previous definition of 'sizeofaddrh'
-     1>c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.cpp(109): warning C4273: 'lfmp::CSocket::printerr' : inconsistent dll linkage
-                 c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.h(37) : see previous definition of 'printerr'
-     1>c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.cpp(116): warning C4273: 'lfmp::CThread::crThread' : inconsistent dll linkage
-                 c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.h(50) : see previous definition of 'crThread'
-     1>c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.cpp(125): warning C4273: 'lfmp::CThread::wrThread' : inconsistent dll linkage
-                 c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.h(49) : see previous definition of 'wrThread'
        ManifestResourceCompile:
          C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\lib_for_my_proj.dll.embed.manifest.res" Debug\lib_for_my_proj_manifest.rc 
        Link:
@@ -65,4 +29,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:05.69
+Time Elapsed 00:00:04.10

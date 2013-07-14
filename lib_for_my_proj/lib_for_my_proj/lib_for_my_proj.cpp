@@ -6,22 +6,30 @@ namespace lfmp
 	{
 	}
 
-	CSocket::CSocket(int a, int s, int p, int pt, int tp)
+	CSocket::CSocket(void * c_socket)
 	{
+		sokh = ((CSocket*)c_socket)->sokh;
+		addrh = ((CSocket*)c_socket)->addrh;
+		hst = ((CSocket*)c_socket)->hst;
+		af = ((CSocket*)c_socket)->af;
+		str = ((CSocket*)c_socket)->str;
+		pr = ((CSocket*)c_socket)->pr;
+		port = ((CSocket*)c_socket)->port;
+		type = ((CSocket*)c_socket)->type;
+	}
+
+	CSocket::CSocket(int vers, char * buff, int a, int s, int p, int pt, int tp)
+	{
+		if(WSAStartup(vers, (WSADATA *) buff))
+		{
+			lfmp::CSocket::printerr("Error WSAStartup");
+		}
 
 		af = a;
 		str = s;
 		pr = p;
 		port = pt;
 		type = tp;
-	}
-
-	void CSocket::start_h(int vers, char * buff)
-	{
-		if(WSAStartup(vers, (WSADATA *) buff))
-		{
-			lfmp::CSocket::printerr("Error WSAStartup");
-		}
 	}
 
 	SOCKET CSocket::getSock(void)
@@ -36,8 +44,8 @@ namespace lfmp
 			printerr("Error socket");
 		}
 
-		addrh.sin_family = af; // for net
-		addrh.sin_port = htons(port); // warning
+		addrh.sin_family = af;
+		addrh.sin_port = htons(port);
 		addrh.sin_addr.s_addr = 0;
 
 	}
@@ -60,9 +68,12 @@ namespace lfmp
 		}
 	}
 
-	int CSocket::accept_h(int * client_addr_size)
+	int CSocket::accept_h(CSocket asock, int * client_addr_size)
 	{
-		return (sokh = accept(sokh, (sockaddr *) &addrh, client_addr_size));
+		if(sokh = accept(asock.getSock(), (sockaddr *) &addrh, client_addr_size))
+			return 1;
+		else
+			return 0;
 	}
 
 	int CSocket::send_h(char * buff, int len, int flags)
@@ -73,7 +84,8 @@ namespace lfmp
 
 	int CSocket::recv_h(char * buff, int len, int flags)
 	{
-		return recv(sokh, &buff[0], len, flags);
+		int i = recv(sokh, buff, len, flags);
+		return i;
 	}
 
 	int CSocket::closesokh(void)
