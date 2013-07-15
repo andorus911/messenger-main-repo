@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" dslVersion="1.0.0.0" Id="77ad935b-a926-4dd4-88aa-bd328d70128f" name="UMLClassDiagram1" linkedPackageId="5e470067-a7aa-4213-8290-6234123deb5d" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <profileInstances>
+    <packageHasProfileInstances Id="49797cf4-3443-45fa-8c6f-c90bba1869b6">
+      <profileInstance Id="8525f972-5174-470d-8b18-3b2c81b7a223" name="StandardProfileL2">
+        <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+      </profileInstance>
+      <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances Id="8fc20f72-c374-4c5a-a76c-ebfdd3aebc61">
+      <profileInstance Id="41d8bded-6c5f-4382-8c57-73463be43a89" name="StandardProfileL3">
+        <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+      </profileInstance>
+      <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="25fd234b-e858-44be-9ebb-bc87a6f398f3" name="CClient" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="95a3870c-1182-4da6-a4db-c63bb34c4982" />
+        <targetEnds>
+          <association Id="b2f1574b-befe-4284-94be-4a5e147464e7" isDerived="false" sourceEndRoleName="CClient" targetEndRoleName="CSocket" isLeaf="false" isAbstract="false">
+            <classMoniker Id="7f35e32f-946c-411b-b8e2-9caae0215862" LastKnownName="CSocket" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="b6685443-b66c-4039-bf40-fd99987eec57" name="CClient" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Shared" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="8e736c03-635e-44e2-a31d-a30ff327e463" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="4f974467-d048-473d-b149-84c76e69d274" name="CSocket" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <elementDefinition Id="29ed9cbb-9400-4e43-b43d-27315de124cd" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="544de4b5-7130-49b4-b15c-77391a85b2d3" />
+          </association>
+        </targetEnds>
+        <ownedAttributesInternal>
+          <property Id="d1ce79b8-e1e4-48ea-8a38-25ed7a16f39f" name="client name" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="b6977914-b576-4d23-8233-25a1112e33a6" />
+          </property>
+          <property Id="5cb39b3c-7880-4b8b-ac3d-e19c0f8dbd6f" name="Csocket socket" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="f4569f5f-d551-4eae-8773-8b88c45fdf55" />
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation Id="a57e7076-7c26-45f8-b710-42d0d981ed8d" name="give client name by socket" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="9ddc8e79-1b8a-4d32-b548-0d259ba263a1" />
+          </operation>
+          <operation Id="a7186db1-ace1-4781-ac1e-60219dc16405" name="get client name" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="e61cadc2-b1cc-406a-9eec-267d2ce1699a" />
+          </operation>
+          <operation Id="e9fea4db-8b23-464e-92cd-2b53c260e4a1" name="get socket" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="20db0594-1090-4ab5-bea5-925539292abb" />
+          </operation>
+          <operation Id="4a4511b0-e2a6-46e4-be86-329e3942f1bf" name="send message" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="ac07f5a6-f2c0-44d3-9f57-2c01b6a4a943" />
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="7f35e32f-946c-411b-b8e2-9caae0215862" name="CSocket" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="3f82bd1c-a33f-4ff5-88cf-ba9dfbec0af2" />
+        <ownedAttributesInternal>
+          <property Id="3d6c60d2-7113-4684-a03c-e773af4a0e52" name="socket" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="79ea8de3-a571-4a3a-b23d-0d8972cdb0cd" />
+          </property>
+          <property Id="03aec7e5-6691-488d-a4f1-efef58f829b2" name="address" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="c2ee265f-8062-4bbd-9755-73cdbe720de9" />
+          </property>
+          <property Id="551ce1e8-9b0b-4f4a-8861-2bf2218b3585" name="host" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="322196c6-b788-410a-9803-a7a755dcd1ed" />
+          </property>
+          <property Id="f31b1b6d-60c3-4b60-83da-bb65818fee8f" name="family" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="95572c6c-e84f-473f-bf4d-1b5f38946f6c" />
+          </property>
+          <property Id="e09d694f-7c6b-443f-b76d-afadfe72c965" name="stream" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="763bd0f6-191f-4386-84f2-134ac01e0a51" />
+          </property>
+          <property Id="488408ba-48b6-4cf5-b156-77885a605a95" name="port" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="d6750798-2a4b-4e3f-9635-3e0577b57c83" />
+          </property>
+          <property Id="04ce401b-6ef0-4859-9c91-0d66c669f365" name="type" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="62dfde8f-313f-45c9-a482-6158ec8fa4b6" />
+          </property>
+          <property Id="3428359c-5008-4182-b916-70ab349e7a82" name="protocol" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="9523322d-cdcf-45af-8ee2-2692e240089a" />
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation Id="775b192b-a84c-4326-a30e-a88efa2294d6" name="socket" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="17e264a9-7a71-420c-9c94-30faf1bb5f80" />
+          </operation>
+          <operation Id="6dfdb000-3c8f-447c-8ffb-617ea0976ac5" name="accept" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="6bdd7968-9e94-41e9-9b50-e4bbd26566b4" />
+          </operation>
+          <operation Id="238e0259-a713-47d0-b1ad-b987b9b6773e" name="listen" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="4cc65b12-9215-4856-8bd0-9d1e88800edb" />
+          </operation>
+          <operation Id="f3febd81-93a8-4d83-b225-48ad7c8b47aa" name="send" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="2b28ac60-6fc6-4ff8-92a3-9d959cf5c529" />
+          </operation>
+          <operation Id="692fe2c4-55d4-40e1-bd5f-65aca7a6f189" name="recv" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="79230d6a-fa5e-4435-92be-20cca1dc552a" />
+          </operation>
+          <operation Id="74ef91b7-3c86-466b-96d5-41d79d3c877d" name="bind" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="bab2dd66-8432-462c-96e9-e47fded238e4" />
+          </operation>
+          <operation Id="eec12e30-8f78-4d66-a267-8d6d92c7f7ce" name="connect" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="ade81813-e746-4fe1-8fab-08e7154e660e" />
+          </operation>
+          <operation Id="6afba2b1-768e-4b6a-9a14-16e9769c8aaa" name="get socket" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="44d780c1-4ddb-4f9f-a607-f3f7b3cb3d69" />
+          </operation>
+          <operation Id="72346d00-b757-4168-9da8-3356befa2a80" name="close socket" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="c6f7f9c6-1144-4174-9bc3-a6cc6d5220df" />
+          </operation>
+          <operation Id="314ea1ee-a252-481c-a1fe-4a1615f3d88e" name="get host by address" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="eaa66b60-c508-4783-b101-2a826c93805a" />
+          </operation>
+          <operation Id="a18b3def-caf8-4e00-b658-158ca5815e44" name="get host name" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="42fe1afa-3205-4020-90c8-d6ecc44c6101" />
+          </operation>
+          <operation Id="4abb291d-865c-4f3a-9a3a-294a9e49c7b6" name="get host address" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="50fcd732-34b2-4595-a0db-0cd639c4bd27" />
+          </operation>
+          <operation Id="8b4fb031-72c4-455d-8b6f-f9a8821e2944" name="destination address" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="518414b3-c5a0-487a-8617-0869316745c4" />
+          </operation>
+          <operation Id="b0118fe9-dd90-4414-a439-7d19885b3234" name="size of address" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="c0734457-33f9-4b1d-b28b-75d436d8f1a4" />
+          </operation>
+          <operation Id="72294ff5-a966-48f0-a9fb-35ebd7919d52" name="print error" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="7d3f5403-174e-4bdb-a59b-986bf89f16d0" />
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="0cb39d5c-34db-40e2-8bc9-12a3ad29db3b" name="CThread" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="9cd5436f-0b52-4e41-b1f9-efa621803ab7" />
+        <ownedAttributesInternal>
+          <property Id="59c27fa4-b987-46bd-874c-120391c2f40d" name="ID" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="8113d387-2c96-4fa1-a360-d686f22dc40b" />
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation Id="ccc1db07-ec56-4b3c-a232-72704e376457" name="create thread" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="ab87341c-d345-4a09-b70a-5a2c754062f5" />
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+  </packagedElements>
+  <package Id="5e470067-a7aa-4213-8290-6234123deb5d" name="ModelingProject1">
+    <elementDefinition Id="79cb9a1d-fe33-41e4-b136-46a7ff2f1ba6" />
+  </package>
+</logicalClassDesignerModel>

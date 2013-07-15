@@ -1,8 +1,4 @@
-//#ifdef LFMPSDLL_EXPORTS
 #define LFMPDLL_API __declspec(dllexport) 
-//#else
-//#define LFMPDLL_API __declspec(dllimport) 
-//#endif
 
 #pragma comment (lib, "ws2_32.lib")
 
@@ -10,11 +6,21 @@
 #include <Windows.h>
 #include <stdio.h>
 
+#ifdef _WIN32
+#define SOCKH SOCKET
+#else
+#define SOCK int
+#define DWORD unsigned long
+#define WINAPI 
+#define LPVOID void*
+//typedef DWORD (WINAPI *LPTHREAD_START_ROUTINE)(LPVOID lpThreadParameter);
+#endif
+
 namespace lfmp
 {
 	class CSocket
 	{
-		SOCKET sokh;
+		SOCKH sokh;
 		sockaddr_in addrh;
 		HOSTENT *hst;
 		int af, str, pr, port, type;
@@ -41,11 +47,7 @@ namespace lfmp
 
 	class CThread
 	{
-	#ifdef _WIN32
 		DWORD ID;
-	#else
-		unsigned long ID;
-	#endif
 	public:
 		LFMPDLL_API DWORD WINAPI wrThread(LPVOID client_socket);
 		LFMPDLL_API void crThread(void * sock, LPTHREAD_START_ROUTINE res);

@@ -1,4 +1,4 @@
-﻿Build started 7/14/2013 6:05:28 PM.
+﻿Build started 7/15/2013 12:51:37 PM.
      1>Project "c:\Users\andorus911\Documents\GitHub\messenger-main-repo\client _pm_v01\client _pm_v01\client _pm_v01.vcxproj" on node 2 (rebuild target(s)).
      1>_PrepareForClean:
          Deleting file "Debug\client _pm_v01.lastbuildstate".
@@ -27,4 +27,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:05.56
+Time Elapsed 00:00:05.69

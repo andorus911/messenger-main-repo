@@ -1,6 +1,5 @@
+#include "Client.h"
 #ifdef _WIN32
-	#pragma comment (lib, "lib_for_my_proj.lib")
-	#include "lib_for_my_proj.h"
 	#include <Windows.h>
 	#define FUNC_THREAD unsigned long __stdcall
 #else 
@@ -21,53 +20,6 @@
 #define PRINTNUSERS if (nclients) printf("%d users on-line\n", nclients); else puts("No user on-line...\n");
 
 FUNC_THREAD PMWorking(void * client_socket);
-
-class CClient {
-	lfmp::CSocket sock;
-	char * client;
-public:
-	CClient()
-	{
-		client = new char[35];
-	}
-	~CClient()
-	{
-		delete[] client;
-		delete client;
-	}
-	void giveCAbysock(lfmp::CSocket given_sock) {
-		sock = given_sock;
-		int j = 0;
-		char * c = given_sock.gethostname();
-		char * a = given_sock.gethostaddr();
-
-		for(int i = 0; c[i] != 0 && i < 10; i++) {
-			client[j++] = c[i];
-		}
-		client[j++] = ' ';
-		client[j++] = '[';
-		for(int i = 0; a[i] != 0; i++) {
-			client[j++] = a[i];
-		}
-		client[j++] = ']';
-		client[j++] = ':';
-		client[j++] = ' ';
-		client[j] = 0;
-	}
-	char * getCAbysock()
-	{
-		return client;
-	}
-	int getSock()
-	{
-		return sock.getSock();
-	}
-	int sendMess(char * buff, int len, int flags)
-	{
-		sock.send_h(buff, len, flags);
-		return 0;
-	}
-};
 
 int nclients = 0;
 int cliID = 0;
@@ -109,14 +61,15 @@ int main(int argc, char* argv[])
 	return 0;
 }
 
-FUNC_THREAD PMWorking(void * client_socket)//можно создать структуру содержащую эту функцию
+FUNC_THREAD PMWorking(void * client_socket)
 {
 	lfmp::CSocket my_sock(client_socket);
 
 	char * buff = new char[1024];
 	char * cbuff = new char[1024];
-	int k, j;
-	int bytes_recv = strlen(buff);
+	int k;
+	int j;
+	int bytes_recv;
 
 #define sHELLO "Wake up, Neo...\n"
 	
@@ -143,6 +96,9 @@ FUNC_THREAD PMWorking(void * client_socket)//можно создать структуру содержащую 
 	nclients--;
 	puts("-disconnect\n");
 	PRINTNUSERS;
+
+	delete[] buff;
+	delete[] cbuff;
 
 	my_sock.closesokh();
 	return 0;

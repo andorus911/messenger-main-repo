@@ -56,6 +56,7 @@ int main(int argc, char* argv[])
 
 	my_sock.closesokh();
 	my_sock.printerr("Recv error");
+	delete[] buff;
 	return -1;
 }
 
@@ -71,7 +72,6 @@ unsigned long __stdcall PMWorking(void * server_socket) {
 		puts(buff);
 	}
 
-	//прочитать про синхронизацию потока!!!!!!!!!!!!!!!!!!!!111111111111111111
-
+	delete[] buff;
 	return 0;
 }

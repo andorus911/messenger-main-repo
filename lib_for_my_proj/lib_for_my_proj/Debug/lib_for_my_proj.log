@@ -1,4 +1,4 @@
-﻿Build started 7/14/2013 4:55:19 PM.
+﻿Build started 7/15/2013 12:31:18 PM.
      1>Project "c:\Users\andorus911\Documents\GitHub\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.vcxproj" on node 2 (rebuild target(s)).
      1>_PrepareForClean:
          Deleting file "Debug\lib_for_my_proj.lastbuildstate".
@@ -7,7 +7,7 @@
        ClCompile:
          C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _USRDLL /D LIB_FOR_MY_PROJ_EXPORTS /D _WINDLL /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt lib_for_my_proj.cpp
          lib_for_my_proj.cpp
-     1>c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.cpp(138): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+     1>c:\users\andorus911\documents\github\messenger-main-repo\lib_for_my_proj\lib_for_my_proj\lib_for_my_proj.cpp(140): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
                  c:\program files\microsoft visual studio 10.0\vc\include\string.h(110) : see declaration of 'strcat'
        ManifestResourceCompile:
          C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo"Debug\lib_for_my_proj.dll.embed.manifest.res" Debug\lib_for_my_proj_manifest.rc 
@@ -31,4 +31,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:04.08
+Time Elapsed 00:00:10.09

@@ -20,10 +20,12 @@ namespace lfmp
 
 	CSocket::CSocket(int vers, char * buff, int a, int s, int p, int pt, int tp)
 	{
+#ifdef _WIN32
 		if(WSAStartup(vers, (WSADATA *) buff))
 		{
 			lfmp::CSocket::printerr("Error WSAStartup");
 		}
+#endif
 
 		af = a;
 		str = s;
